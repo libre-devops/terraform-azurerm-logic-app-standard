@@ -1,0 +1,8 @@
+misconfigurations:
+  - id: AVD-AZU-0012
+    statement: >-
+      The module's storage account carries no network rules by default, deliberately. Logic App
+      Standard reaches its storage from platform ranges, so IP allow-listing the app's outbound
+      IPs is not a reliable lockdown; the working lockdown is VNet integration plus service or
+      private endpoints, which is caller topology and expressible through the app's
+      virtual_network_subnet_id plus your own network rules on a brought-your-own storage account.
