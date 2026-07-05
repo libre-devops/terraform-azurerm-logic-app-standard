@@ -116,7 +116,7 @@ No modules.
 | <a name="output_kind"></a> [kind](#output\_kind) | Map of app name to the app kind. |
 | <a name="output_logic_app_ids"></a> [logic\_app\_ids](#output\_logic\_app\_ids) | Map of app name to id. |
 | <a name="output_logic_app_ids_zipmap"></a> [logic\_app\_ids\_zipmap](#output\_logic\_app\_ids\_zipmap) | Map of app name to { name, id } for easy composition. |
-| <a name="output_logic_apps"></a> [logic\_apps](#output\_logic\_apps) | Map of app name to the full logic app object. Sensitive as a whole because it carries the storage access key and site credentials; the ids, hostnames, and identity maps alongside stay plain for composition. |
+| <a name="output_logic_apps"></a> [logic\_apps](#output\_logic\_apps) | Map of app name to a curated logic app object (name, id, kind, hostname, outbound IPs, custom domain verification id, and the SCM site\_credential). Sensitive because it carries site\_credential. The full resource object is deliberately not exported: doing so surfaces the provider-deprecated site\_config.public\_network\_access\_enabled attribute. The ids, hostnames, and identity maps alongside stay plain for composition. |
 | <a name="output_service_plan_ids"></a> [service\_plan\_ids](#output\_service\_plan\_ids) | Map of plan name (or app name for auto-created plans) to plan id. |
 | <a name="output_storage_account_names"></a> [storage\_account\_names](#output\_storage\_account\_names) | Map of app name to the module-created storage account name (only apps with create\_storage\_account). |
 <!-- END_TF_DOCS -->

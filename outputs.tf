@@ -28,9 +28,20 @@ output "logic_app_ids_zipmap" {
 }
 
 output "logic_apps" {
-  description = "Map of app name to the full logic app object. Sensitive as a whole because it carries the storage access key and site credentials; the ids, hostnames, and identity maps alongside stay plain for composition."
-  value       = azurerm_logic_app_standard.this
-  sensitive   = true
+  description = "Map of app name to a curated logic app object (name, id, kind, hostname, outbound IPs, custom domain verification id, and the SCM site_credential). Sensitive because it carries site_credential. The full resource object is deliberately not exported: doing so surfaces the provider-deprecated site_config.public_network_access_enabled attribute. The ids, hostnames, and identity maps alongside stay plain for composition."
+  value = {
+    for k, a in azurerm_logic_app_standard.this : k => {
+      name                           = a.name
+      id                             = a.id
+      kind                           = a.kind
+      default_hostname               = a.default_hostname
+      custom_domain_verification_id  = a.custom_domain_verification_id
+      outbound_ip_addresses          = a.outbound_ip_addresses
+      possible_outbound_ip_addresses = a.possible_outbound_ip_addresses
+      site_credential                = a.site_credential
+    }
+  }
+  sensitive = true
 }
 
 output "service_plan_ids" {
